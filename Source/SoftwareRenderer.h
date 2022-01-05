@@ -5,4 +5,5 @@
 #include "log.h"
 #include "geometry.h"
 #include "color.h"
+#include "buffer.h"
 #include "texture.h"

@@ -9,22 +9,20 @@
 using namespace SoftwareRenderer;
 using namespace std;
 
-Texture::Texture(int width, int height) {
-  _width = width;
-  _height = height;
-  _pixels.resize(_width * _height);
-}
+Texture::Texture() : Texture(0, 0) {}
+
+Texture::Texture(int width, int height) : Texture(width, height, Color()) {}
 
 Texture::Texture(int width, int height, Color color) {
-  _width = width;
-  _height = height;
-  _pixels.resize(_width * _height);
-  for (auto i = 0; i < _width * _height; i++) _pixels[i] = color;
+  _buffer = ColorBuffer(width, height, color);
 }
 
-void Texture::SaveAsPNG(const char* filepath) {
-  LogDebug("Texture::SaveAsPNG width: {}, height: {}, filepath: {}", _width,
-           _height, filepath);
+Texture::Texture(const char* filepath) {}
 
-  stbi_write_png(filepath, _width, _height, 4, _pixels.data(), _width * 4);
+void Texture::SaveAsPNG(const char* filepath) {
+  LogDebug("Texture::SaveAsPNG width: {}, height: {}, filepath: {}",
+           _buffer.Width(), _buffer.Height(), filepath);
+
+  stbi_write_png(filepath, _buffer.Width(), _buffer.Height(), 4,
+                 _buffer.Pixels().data(), _buffer.Width() * 4);
 }

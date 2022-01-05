@@ -1,19 +1,21 @@
 #pragma once
 
-#include "color.h"
+#include "buffer.h"
 #include <vector>
 
 namespace SoftwareRenderer {
 class Texture {
  private:
-  int _width;
-  int _height;
-  std::vector<Color> _pixels;
+  ColorBuffer _buffer;
 
  public:
+  Texture();
+
   Texture(int width, int height);
 
   Texture(int width, int height, Color color);
+
+  Texture(const char* filepath);
 
   void SaveAsPNG(const char* filepath);
 };

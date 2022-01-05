@@ -1,18 +1,21 @@
 #pragma once
 
-#include "config.h"
+#include "tools.h"
 
 #include <spdlog/spdlog.h>
-#define LogInfo spdlog::info
-#define LogError spdlog::error
-#define LogWarn spdlog::warn
-#define LogDebug spdlog::debug
+
+namespace SoftwareRenderer {
+FUNC_ALISE(LogInfo, spdlog::info);
+FUNC_ALISE(LogError, spdlog::error);
+FUNC_ALISE(LogWarn, spdlog::warn);
+FUNC_ALISE(LogDebug, spdlog::debug);
 
 inline void LogEnableBacktrace() { spdlog::enable_backtrace(32); }
 
 inline void LogDumpBacktrace() { spdlog::dump_backtrace(); }
 
-void InitLogger() {
+inline void InitLogger() {
   spdlog::set_pattern("[%H:%M:%S %z] [%^%L%$] [thread %t] %v");
   spdlog::set_level(spdlog::level::info);
 }
+}  // namespace SoftwareRenderer

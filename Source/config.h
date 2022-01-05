@@ -1,11 +1,13 @@
 #pragma once
 
-// #define CONFIG_USE_DOUBLE_PRECISION
+// #define SOFTWARE_RENDERER_USE_DOUBLE_PRECISION
 
+namespace SoftwareRenderer {
 inline bool ConfigUseDoublePrecision() {
-#ifdef CONFIG_USE_DOUBLE_PRECISION
+#ifdef SOFTWARE_RENDERER_USE_DOUBLE_PRECISION
   return true;
 #else
   return false;
 #endif
 }
+}  // namespace SoftwareRenderer

@@ -3,4 +3,4 @@ project(SoftwareRenderer)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(SoftwareRenderer src/main.cpp)
+add_executable(SoftwareRenderer Source/main.cpp)

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "config.h"
-#include "tools.h"
-#include "log.h"
-#include "geometry.h"
-#include "color.h"
 #include "buffer.h"
+#include "color.h"
+#include "config.h"
+#include "geometry.h"
+#include "log.h"
 #include "texture.h"
+#include "tools.h"

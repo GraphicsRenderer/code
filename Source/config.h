@@ -10,4 +10,4 @@ inline bool ConfigUseDoublePrecision() {
   return false;
 #endif
 }
-}  // namespace SoftwareRenderer
+} // namespace SoftwareRenderer

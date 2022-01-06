@@ -5,18 +5,18 @@
 
 namespace SoftwareRenderer {
 class Texture {
- private:
+private:
   ColorBuffer _buffer;
 
- public:
+public:
   Texture();
 
   Texture(int width, int height);
 
   Texture(int width, int height, Color color);
 
-  Texture(const char* filepath);
+  Texture(const char *filepath);
 
-  void SaveAsPNG(const char* filepath);
+  void SaveAsPNG(const char *filepath);
 };
-}  // namespace SoftwareRenderer
+} // namespace SoftwareRenderer

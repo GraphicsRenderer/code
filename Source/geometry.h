@@ -38,4 +38,4 @@ typedef int a;
 #else
 typedef int a;
 #endif
-}  // namespace SoftwareRenderer
+} // namespace SoftwareRenderer

@@ -17,9 +17,9 @@ Texture::Texture(int width, int height, Color color) {
   _buffer = ColorBuffer(width, height, color);
 }
 
-Texture::Texture(const char* filepath) {}
+Texture::Texture(const char *filepath) {}
 
-void Texture::SaveAsPNG(const char* filepath) {
+void Texture::SaveAsPNG(const char *filepath) {
   LogDebug("Texture::SaveAsPNG width: {}, height: {}, filepath: {}",
            _buffer.Width(), _buffer.Height(), filepath);
 

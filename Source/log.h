@@ -18,4 +18,4 @@ inline void InitLogger() {
   spdlog::set_pattern("[%H:%M:%S %z] [%^%L%$] [thread %t] %v");
   spdlog::set_level(spdlog::level::info);
 }
-}  // namespace SoftwareRenderer
+} // namespace SoftwareRenderer

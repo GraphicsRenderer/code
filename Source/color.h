@@ -21,4 +21,4 @@ struct Color {
 
   static inline Color Blue() { return Color(0, 0, 255, 255); }
 };
-}  // namespace SoftwareRenderer
+} // namespace SoftwareRenderer

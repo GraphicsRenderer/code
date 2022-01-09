@@ -9,7 +9,7 @@ using namespace std;
 ColorBuffer::ColorBuffer() : ColorBuffer(0, 0) {}
 
 ColorBuffer::ColorBuffer(int width, int height)
-    : ColorBuffer(width, height, Color()) {}
+    : ColorBuffer(width, height, Color::Black()) {}
 
 ColorBuffer::ColorBuffer(int width, int height, Color color) {
   _width = width;
@@ -19,16 +19,32 @@ ColorBuffer::ColorBuffer(int width, int height, Color color) {
     _pixels[i] = color;
 }
 
-int ColorBuffer::Width() { return _width; }
+int ColorBuffer::Width() const { return _width; }
 
-int ColorBuffer::Height() { return _height; }
+int ColorBuffer::Height() const { return _height; }
 
-const vector<Color> &ColorBuffer::Pixels() { return _pixels; }
+const vector<Color> &ColorBuffer::Colors() const { return _pixels; }
 
-Color ColorBuffer::GetPixel(int x, int y) { return Color::Black(); }
-
-Color ColorBuffer::SetPixel(int x, int y, Color color) {
-  return Color::Black();
+Color ColorBuffer::GetColor(int x, int y) const {
+  auto idx = y * Width() + x;
+  return _pixels[idx];
 }
 
-void ColorBuffer::SetPixels(Color) {}
+void ColorBuffer::SetColor(int x, int y, Color color) {
+  auto idx = y * Width() + x;
+  _pixels[idx] = color;
+}
+
+void ColorBuffer::SetColors(Color color) {
+  for (auto i = 0; i < _pixels.size(); i++) {
+    _pixels[i] = color;
+  }
+}
+
+void ColorBuffer::SetColors(const std::vector<Color> &pixels) {
+  for (auto i = 0; i < _pixels.size(); i++) {
+    if (i >= pixels.size())
+      break;
+    _pixels[i] = pixels[i];
+  }
+}

@@ -1,6 +1,7 @@
 #include "texture.h"
 
 #include "log.h"
+#include <vector>
 
 // This line is required for stb image library
 #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -10,20 +11,20 @@
 using namespace SoftwareRenderer;
 using namespace std;
 
-Texture::Texture() : Texture(0, 0) {}
-
-Texture::Texture(int width, int height) : Texture(width, height, Color()) {}
-
-Texture::Texture(int width, int height, Color color) {
-  _buffer = ColorBuffer(width, height, color);
-}
-
 Texture::Texture(const char *filepath) {}
 
 void Texture::SaveAsPNG(const char *filepath) {
-  LogDebug("Texture::SaveAsPNG width: {}, height: {}, filepath: {}",
-           _buffer.Width(), _buffer.Height(), filepath);
+  LogDebug("Texture::SaveAsPNG width: {}, height: {}, filepath: {}", Width(),
+           Height(), filepath);
 
-  stbi_write_png(filepath, _buffer.Width(), _buffer.Height(), 4,
-                 _buffer.Pixels().data(), _buffer.Width() * 4);
+  auto pixels = vector<Color>();
+  pixels.resize(Width() * Height());
+  for (auto x = 0; x < Width(); x++)
+    for (auto y = 0; y < Height(); y++) {
+      auto idx = (Height() - y - 1) * Width() + x;
+      if (idx < 0 || idx >= Width() * Height())
+        continue;
+      pixels[idx] = GetColor(x, y);
+    }
+  stbi_write_png(filepath, Width(), Height(), 4, pixels.data(), Width() * 4);
 }

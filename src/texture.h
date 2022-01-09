@@ -4,16 +4,10 @@
 #include <vector>
 
 namespace SoftwareRenderer {
-class Texture {
+class Texture : public ColorBuffer {
 private:
-  ColorBuffer _buffer;
-
 public:
-  Texture();
-
-  Texture(int width, int height);
-
-  Texture(int width, int height, Color color);
+  using ColorBuffer::ColorBuffer;
 
   Texture(const char *filepath);
 

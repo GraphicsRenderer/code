@@ -8,7 +8,8 @@
                 "${workspaceFolder}/thirdparty/assimp/include",
                 "${workspaceFolder}/thirdparty/eigen",
                 "${workspaceFolder}/thirdparty/stb",
-                "${workspaceFolder}/thirdparty/json"
+                "${workspaceFolder}/thirdparty/json",
+                "${workspaceFolder}/src"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

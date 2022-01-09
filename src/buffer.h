@@ -17,17 +17,19 @@ public:
 
   ColorBuffer(int width, int height, Color color);
 
-  int Width();
+  int Width() const;
 
-  int Height();
+  int Height() const;
 
-  const std::vector<Color> &Pixels();
+  const std::vector<Color> &Colors() const;
 
-  Color GetPixel(int x, int y);
+  Color GetColor(int x, int y) const;
 
-  Color SetPixel(int x, int y, Color color);
+  void SetColor(int x, int y, Color color);
 
-  void SetPixels(Color);
+  void SetColors(Color color);
+
+  void SetColors(const std::vector<Color> &pixels);
 };
 
 class DepthBuffer {

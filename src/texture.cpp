@@ -1,7 +1,8 @@
 #include "texture.h"
 
-#include "log.h"
 #include <vector>
+
+#include "log.h"
 
 // This line is required for stb image library
 #define STB_IMAGE_WRITE_IMPLEMENTATION

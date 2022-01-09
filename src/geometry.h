@@ -1,7 +1,8 @@
 #pragma once
 
-#include "config.h"
 #include <Eigen/Core>
+
+#include "config.h"
 
 namespace SoftwareRenderer {
 // Vector2

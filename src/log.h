@@ -1,8 +1,8 @@
 #pragma once
 
-#include "tools.h"
-
 #include <spdlog/spdlog.h>
+
+#include "tools.h"
 
 namespace SoftwareRenderer {
 FUNC_ALISE(LogInfo, spdlog::info);

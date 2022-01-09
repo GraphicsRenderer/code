@@ -1,7 +1,8 @@
 #pragma once
 
-#include "buffer.h"
 #include <vector>
+
+#include "buffer.h"
 
 namespace SoftwareRenderer {
 class Texture : public ColorBuffer {

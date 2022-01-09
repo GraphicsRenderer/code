@@ -1,7 +1,7 @@
 #include "buffer.h"
 
-#include "color.h"
 #include "log.h"
+#include "vec.h"
 
 using namespace SoftwareRenderer;
 using namespace std;

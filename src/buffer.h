@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "color.h"
+#include "vec.h"
 
 namespace SoftwareRenderer {
 class ColorBuffer {

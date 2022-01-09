@@ -24,11 +24,11 @@ set(ASSIMP_BUILD_ASSIMP_TOOLS OFF)
 set(ASSIMP_BUILD_TESTS OFF)
 add_subdirectory(ThirdParty/assimp)
 
-file(GLOB_RECURSE SOURCES Source/*.cpp)
+file(GLOB_RECURSE SOURCES src/*.cpp)
 add_executable(SoftwareRenderer.exe main.cpp ${SOURCES})
 target_link_libraries(SoftwareRenderer.exe PRIVATE assimp)
 
-file(GLOB_RECURSE CHAPTER_SOURCES Chapter/*.cpp)
+file(GLOB_RECURSE CHAPTER_SOURCES chapters/*.cpp)
 foreach(c IN LISTS CHAPTER_SOURCES)
     get_filename_component(PARENT_DIR ${c} DIRECTORY)
     get_filename_component(PARENTNAME ${PARENT_DIR} NAME_WLE)

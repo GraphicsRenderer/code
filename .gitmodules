@@ -1,15 +1,15 @@
 [submodule "ThirdParty/assimp"]
-	path = ThirdParty/assimp
+	path = thirdparty/assimp
 	url = https://github.com/assimp/assimp.git
 [submodule "ThirdParty/eigen"]
-	path = ThirdParty/eigen
+	path = thirdparty/eigen
 	url = https://gitlab.com/libeigen/eigen.git
 [submodule "ThirdParty/stb"]
-	path = ThirdParty/stb
+	path = thirdparty/stb
 	url = https://github.com/nothings/stb.git
 [submodule "ThirdParty/json"]
-	path = ThirdParty/json
+	path = thirdparty/json
 	url = https://github.com/nlohmann/json.git
 [submodule "ThirdParty/spdlog"]
-	path = ThirdParty/spdlog
+	path = thirdparty/spdlog
 	url = https://github.com/gabime/spdlog.git

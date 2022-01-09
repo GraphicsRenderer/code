@@ -4,6 +4,7 @@
 
 // This line is required for stb image library
 #define STB_IMAGE_WRITE_IMPLEMENTATION
+#define STB_IMAGE_WRITE_STATIC
 #include <stb_image_write.h>
 
 using namespace SoftwareRenderer;

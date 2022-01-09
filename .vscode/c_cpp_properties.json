@@ -4,7 +4,11 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/ThirdParty/spdlog/include"
+                "${workspaceFolder}/thirdparty/spdlog/include",
+                "${workspaceFolder}/thirdparty/assimp/include",
+                "${workspaceFolder}/thirdparty/eigen",
+                "${workspaceFolder}/thirdparty/stb",
+                "${workspaceFolder}/thirdparty/json"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

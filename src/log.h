@@ -2,7 +2,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "tools.h"
+#include "utility.h"
 
 namespace SoftwareRenderer {
 FUNC_ALISE(LogInfo, spdlog::info);
@@ -14,8 +14,9 @@ inline void LogEnableBacktrace() { spdlog::enable_backtrace(32); }
 
 inline void LogDumpBacktrace() { spdlog::dump_backtrace(); }
 
-inline void InitLogger() {
-  spdlog::set_pattern("[%H:%M:%S %z] [%^%L%$] [thread %t] %v");
-  spdlog::set_level(spdlog::level::info);
+inline void InitLogger()
+{
+    spdlog::set_pattern("[%H:%M:%S %z] [%^%L%$] [thread %t] %v");
+    spdlog::set_level(spdlog::level::info);
 }
 } // namespace SoftwareRenderer

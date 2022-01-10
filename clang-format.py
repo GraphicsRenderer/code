@@ -8,7 +8,7 @@ src_dir = os.path.join(current_dir, "src")
 chapters_dir = os.path.join(current_dir, "chapters")
 
 CLANGFORMATARGS = [
-    "--style=LLVM",  # NOT FORMAT
+    "--style=file",  # NOT FORMAT
     "-i",
 ]
 

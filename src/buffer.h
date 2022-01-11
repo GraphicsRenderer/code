@@ -12,11 +12,13 @@ private:
     std::vector<Color> _pixels;
 
 public:
-    ColorBuffer();
+    explicit ColorBuffer();
 
-    ColorBuffer(int width, int height);
+    explicit ColorBuffer(int width, int height);
 
-    ColorBuffer(int width, int height, Color color);
+    explicit ColorBuffer(int width, int height, Color color);
+
+    Vec2i Size() const;
 
     int Width() const;
 

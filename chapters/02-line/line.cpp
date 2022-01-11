@@ -7,25 +7,25 @@ using namespace SoftwareRenderer;
 
 void Draw(Texture& tex, Vec2f x, Vec2f y, float step, Color color)
 {
-    if (x.X() >= y.X())
+    if (x.x >= y.x)
         std::swap(x, y);
     auto dir = y - x;
     for (auto t = 0.0f; t <= 1.0f; t += step) {
-        auto p = x + dir * t;
-        tex.SetColor(tex.Width() * p.X(), tex.Height() * p.Y(), color);
+        auto p = x + t * dir;
+        tex.SetColor(tex.Width() * p.x, tex.Height() * p.y, color);
     }
 }
 
 void DrawInPixel(Texture& tex, Vec2f x, Vec2f y, Color color)
 {
-    if (x.X() >= y.X())
+    if (x.x >= y.x)
         std::swap(x, y);
-    auto px = Vec2i(tex.Width() * x.X(), tex.Height() * x.Y());
-    auto py = Vec2i(tex.Width() * y.X(), tex.Height() * y.Y());
+    auto px = Vec2i(tex.Width() * x.x, tex.Height() * x.y);
+    auto py = Vec2i(tex.Width() * y.x, tex.Height() * y.y);
 
-    for (auto x = px.X(); x <= py.X(); x++) {
-        auto t = (x - px.X()) / (float)(py.X() - px.X());
-        auto y = (int)(t * (py.Y() - px.Y()) + px.Y());
+    for (auto x = px.x; x <= py.x; x++) {
+        auto t = (x - px.x) / (float)(py.x - px.x);
+        auto y = (int)(t * (py.y - px.y) + px.y);
         tex.SetColor(x, y, color);
     }
 }

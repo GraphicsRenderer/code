@@ -25,6 +25,8 @@ ColorBuffer::ColorBuffer(int width, int height, Color color)
         _pixels[i] = color;
 }
 
+Vec2i ColorBuffer::Size() const { return Vec2i(Width(), Height()); }
+
 int ColorBuffer::Width() const { return _width; }
 
 int ColorBuffer::Height() const { return _height; }

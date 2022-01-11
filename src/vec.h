@@ -1,97 +1,99 @@
 #pragma once
 
 #include "utility.h"
+#include <cassert>
 
 namespace SoftwareRenderer {
-template <typename DATATYPE, int SIZE, typename SUBTYPE>
-class VectorLike {
-protected:
-    DATATYPE _data[SIZE];
-
-public:
-    VectorLike() { ELEMENT_WISE_ASSIGN(_data, 0, SIZE); }
-
-    inline int Size() const { return SIZE; }
-
-    DISABLE_NEW_DELETE();
-
-    inline SUBTYPE operator+(const SUBTYPE& rhs)
-    {
-        SUBTYPE value;
-        ELEMENT_WISE_OP(value._data, _data, rhs._data, SIZE, +);
-        return value;
+#define VECTOR_LIKE_OPERATOR_ADD(Type, Size)                \
+    static Type operator+(const Type& lhs, const Type& rhs) \
+    {                                                       \
+        Type ret;                                           \
+        ELEMENT_WISE_OP(ret, lhs, rhs, Size, +);            \
+        return ret;                                         \
     }
 
-    inline SUBTYPE operator-(const SUBTYPE& rhs)
-    {
-        SUBTYPE value;
-        ELEMENT_WISE_OP(value._data, _data, rhs._data, SIZE, -);
-        return value;
+#define VECTOR_LIKE_OPERATOR_SUB(Type, Size)                \
+    static Type operator-(const Type& lhs, const Type& rhs) \
+    {                                                       \
+        Type ret;                                           \
+        ELEMENT_WISE_OP(ret, lhs, rhs, Size, -);            \
+        return ret;                                         \
     }
 
-    inline SUBTYPE operator*(const SUBTYPE& rhs)
-    {
-        SUBTYPE value;
-        ELEMENT_WISE_OP(value._data, _data, rhs._data, SIZE, *);
-        return value;
+#define VECTOR_LIKE_OPERATOR_MUL(Type, Size)                 \
+    static Type operator*(const Type& lhs, const Type& rhs)  \
+    {                                                        \
+        Type ret;                                            \
+        ELEMENT_WISE_OP(ret, lhs, rhs, Size, *);             \
+        return ret;                                          \
+    }                                                        \
+                                                             \
+    static Type operator*(const Type& lhs, const float& rhs) \
+    {                                                        \
+        Type ret;                                            \
+        ELEMENT_WISE_SCALAR_OP(ret, lhs, rhs, Size, *);      \
+        return ret;                                          \
+    }                                                        \
+                                                             \
+    static Type operator*(const float& lhs, const Type& rhs) \
+    {                                                        \
+        Type ret;                                            \
+        ELEMENT_WISE_SCALAR_OP(ret, rhs, lhs, Size, *);      \
+        return ret;                                          \
     }
 
-    inline SUBTYPE operator*(const DATATYPE& rhs)
-    {
-        SUBTYPE value;
-        ELEMENT_WISE_SCALAR_OP(value._data, _data, rhs, SIZE, *);
-        return value;
+#define VECTOR_LIKE_OPERATOR_DIV(Type, Size)                 \
+    static Type operator/(const Type& lhs, const Type& rhs)  \
+    {                                                        \
+        Type ret;                                            \
+        ELEMENT_WISE_OP(ret, lhs, rhs, Size, /);             \
+        return ret;                                          \
+    }                                                        \
+                                                             \
+    static Type operator/(const Type& lhs, const float& rhs) \
+    {                                                        \
+        Type ret;                                            \
+        ELEMENT_WISE_SCALAR_OP(ret, lhs, rhs, Size, /);      \
+        return ret;                                          \
+    }                                                        \
+                                                             \
+    static Type operator/(const float& lhs, const Type& rhs) \
+    {                                                        \
+        Type ret;                                            \
+        ELEMENT_WISE_SCALAR_OP(ret, rhs, lhs, Size, /);      \
+        return ret;                                          \
     }
 
-    inline SUBTYPE operator/(const SUBTYPE& rhs)
-    {
-        SUBTYPE value;
-        ELEMENT_WISE_OP(value._data, _data, rhs._data, SIZE, /);
-        return value;
-    }
+#pragma region Color
 
-    static inline SUBTYPE Zero()
-    {
-        SUBTYPE value;
-        ELEMENT_WISE_ASSIGN(value._data, 0, SIZE);
-        return value;
-    }
-};
+struct Color {
+    char r;
+    char g;
+    char b;
+    char a;
 
-class Color : public VectorLike<char, 4, Color> {
-public:
-    using VectorLike<char, 4, Color>::VectorLike;
-
-    Color()
-        : Color(0, 0, 0, 0)
+    explicit Color()
+        : Color(0, 0, 0, 255)
     {
     }
 
-    Color(char c)
+    explicit Color(char c)
         : Color(c, c, c, 255)
     {
     }
 
-    Color(char r, char g, char b)
+    explicit Color(char r, char g, char b)
         : Color(r, g, b, 255)
     {
     }
 
-    Color(char r, char g, char b, char a)
+    explicit Color(char r, char g, char b, char a)
+        : r(r)
+        , g(g)
+        , b(b)
+        , a(a)
     {
-        _data[0] = r;
-        _data[1] = g;
-        _data[2] = b;
-        _data[3] = a;
     }
-
-    inline char R() const { return _data[0]; }
-
-    inline char G() const { return _data[1]; }
-
-    inline char B() const { return _data[2]; }
-
-    inline char A() const { return _data[3]; }
 
     static inline Color White() { return Color(255, 255, 255); }
 
@@ -102,88 +104,302 @@ public:
     static inline Color Green() { return Color(0, 255, 0); }
 
     static inline Color Blue() { return Color(0, 0, 255); }
-};
 
-template <typename DATATYPE, int SIZE, typename SUBTYPE>
-class Vector : public VectorLike<DATATYPE, SIZE, SUBTYPE> {
-public:
-    using VectorLike<DATATYPE, SIZE, SUBTYPE>::VectorLike;
-
-    static inline SUBTYPE One()
+    inline std::size_t Length() const
     {
-        SUBTYPE value;
-        ELEMENT_WISE_ASSIGN(value._data, 1, SIZE);
-        return value;
+        return 4;
+    }
+
+    inline char& operator[](std::size_t idx)
+    {
+        assert(idx >= 0 && idx < Length());
+        switch (idx) {
+        case 0:
+            return r;
+        case 1:
+            return g;
+        case 2:
+            return b;
+        case 3:
+            return a;
+        default:
+            return r;
+        }
+    }
+
+    inline const char& operator[](std::size_t idx) const
+    {
+        assert(idx >= 0 && idx < Length());
+        switch (idx) {
+        case 0:
+            return r;
+        case 1:
+            return g;
+        case 2:
+            return b;
+        case 3:
+            return a;
+        default:
+            return r;
+        }
     }
 };
 
-template <typename DATATYPE, typename SUBTYPE>
-class Vector2 : public VectorLike<DATATYPE, 2, SUBTYPE> {
-public:
-    using VectorLike<DATATYPE, 2, SUBTYPE>::VectorLike;
+VECTOR_LIKE_OPERATOR_ADD(Color, 4);
 
-    Vector2(DATATYPE x, DATATYPE y)
+VECTOR_LIKE_OPERATOR_SUB(Color, 4);
+
+VECTOR_LIKE_OPERATOR_MUL(Color, 4);
+
+VECTOR_LIKE_OPERATOR_DIV(Color, 4);
+
+#pragma endregion
+
+#pragma region Vec2
+
+template <typename DATATYPE>
+struct Vec2 {
+    DATATYPE x;
+    DATATYPE y;
+
+    explicit Vec2()
+        : Vec2(0, 0)
     {
-        VectorLike<DATATYPE, 2, SUBTYPE>::_data[0] = x;
-        VectorLike<DATATYPE, 2, SUBTYPE>::_data[1] = y;
     }
 
-    inline DATATYPE X() const
+    explicit Vec2(DATATYPE v)
+        : Vec2(v, v)
     {
-        return VectorLike<DATATYPE, 2, SUBTYPE>::_data[0];
     }
 
-    inline DATATYPE Y() const
+    explicit Vec2(DATATYPE x, DATATYPE y)
+        : x(x)
+        , y(y)
     {
-        return VectorLike<DATATYPE, 2, SUBTYPE>::_data[1];
+    }
+
+    inline std::size_t Length() const
+    {
+        return 2;
+    }
+
+    inline DATATYPE& operator[](std::size_t idx)
+    {
+        assert(idx >= 0 && idx < Length());
+        switch (idx) {
+        case 0:
+            return x;
+        case 1:
+            return y;
+        default:
+            return x;
+        }
+    }
+
+    inline const DATATYPE& operator[](std::size_t idx) const
+    {
+        assert(idx >= 0 && idx < Length());
+        switch (idx) {
+        case 0:
+            return x;
+        case 1:
+            return y;
+        default:
+            return x;
+        }
     }
 };
 
-template <typename DATATYPE, typename SUBTYPE>
-class Vector3 : public VectorLike<DATATYPE, 3, SUBTYPE> {
-public:
-    using VectorLike<DATATYPE, 3, SUBTYPE>::VectorLike;
+typedef Vec2<int> Vec2i;
 
-    Vector3(DATATYPE x, DATATYPE y, DATATYPE z)
+typedef Vec2<float> Vec2f;
+
+VECTOR_LIKE_OPERATOR_ADD(Vec2i, 2);
+
+VECTOR_LIKE_OPERATOR_SUB(Vec2i, 2);
+
+VECTOR_LIKE_OPERATOR_MUL(Vec2i, 2);
+
+VECTOR_LIKE_OPERATOR_DIV(Vec2i, 2);
+
+VECTOR_LIKE_OPERATOR_ADD(Vec2f, 2);
+
+VECTOR_LIKE_OPERATOR_SUB(Vec2f, 2);
+
+VECTOR_LIKE_OPERATOR_MUL(Vec2f, 2);
+
+VECTOR_LIKE_OPERATOR_DIV(Vec2f, 2);
+
+#pragma endregion
+
+#pragma region Vec3
+
+template <typename DATATYPE>
+struct Vec3 {
+    DATATYPE x;
+    DATATYPE y;
+    DATATYPE z;
+
+    explicit Vec3()
+        : Vec3(0, 0, 0)
     {
-        VectorLike<DATATYPE, 3, SUBTYPE>::_data[0] = x;
-        VectorLike<DATATYPE, 3, SUBTYPE>::_data[1] = y;
-        VectorLike<DATATYPE, 3, SUBTYPE>::_data[2] = z;
     }
 
-    inline DATATYPE X() const
+    explicit Vec3(DATATYPE v)
+        : Vec3(v, v, v)
     {
-        return VectorLike<DATATYPE, 3, SUBTYPE>::_data[0];
     }
 
-    inline DATATYPE Y() const
+    explicit Vec3(DATATYPE x, DATATYPE y, DATATYPE z)
+        : x(x)
+        , y(y)
+        , z(z)
     {
-        return VectorLike<DATATYPE, 3, SUBTYPE>::_data[1];
     }
 
-    inline DATATYPE Z() const
+    inline std::size_t Length() const
     {
-        return VectorLike<DATATYPE, 3, SUBTYPE>::_data[1];
+        return 3;
+    }
+
+    inline DATATYPE& operator[](std::size_t idx)
+    {
+        assert(idx >= 0 && idx < Length());
+        switch (idx) {
+        case 0:
+            return x;
+        case 1:
+            return y;
+        case 2:
+            return z;
+        default:
+            return x;
+        }
+    }
+
+    inline const DATATYPE& operator[](std::size_t idx) const
+    {
+        assert(idx >= 0 && idx < Length());
+        switch (idx) {
+        case 0:
+            return x;
+        case 1:
+            return y;
+        case 2:
+            return z;
+        default:
+            return x;
+        }
     }
 };
 
-class Vec2i : public Vector2<int, Vec2i> {
-public:
-    using Vector2<int, Vec2i>::Vector2;
+typedef Vec3<int> Vec3i;
+
+typedef Vec3<float> Vec3f;
+
+VECTOR_LIKE_OPERATOR_ADD(Vec3i, 3);
+
+VECTOR_LIKE_OPERATOR_SUB(Vec3i, 3);
+
+VECTOR_LIKE_OPERATOR_MUL(Vec3i, 3);
+
+VECTOR_LIKE_OPERATOR_DIV(Vec3i, 3);
+
+VECTOR_LIKE_OPERATOR_ADD(Vec3f, 3);
+
+VECTOR_LIKE_OPERATOR_SUB(Vec3f, 3);
+
+VECTOR_LIKE_OPERATOR_MUL(Vec3f, 3);
+
+VECTOR_LIKE_OPERATOR_DIV(Vec3f, 3);
+
+#pragma endregion
+
+#pragma region Vec4
+
+template <typename DATATYPE>
+struct Vec4 {
+    DATATYPE x;
+    DATATYPE y;
+    DATATYPE z;
+    DATATYPE w;
+
+    explicit Vec4()
+        : Vec4(0, 0, 0, 0)
+    {
+    }
+
+    explicit Vec4(DATATYPE v)
+        : Vec4(v, v, v, v)
+    {
+    }
+
+    explicit Vec4(DATATYPE x, DATATYPE y, DATATYPE z, DATATYPE w)
+        : x(x)
+        , y(y)
+        , z(z)
+        , w(w)
+    {
+    }
+
+    inline std::size_t Length() const
+    {
+        return 3;
+    }
+
+    inline DATATYPE& operator[](std::size_t idx)
+    {
+        switch (idx) {
+        case 0:
+            return x;
+        case 1:
+            return y;
+        case 2:
+            return z;
+        case 3:
+            return w;
+        default:
+            return x;
+        }
+    }
+
+    inline const DATATYPE& operator[](std::size_t idx) const
+    {
+        assert(idx >= 0 && idx < Length());
+        switch (idx) {
+        case 0:
+            return x;
+        case 1:
+            return y;
+        case 2:
+            return z;
+        case 3:
+            return w;
+        default:
+            return x;
+        }
+    }
 };
 
-class Vec2f : public Vector2<float, Vec2f> {
-public:
-    using Vector2<float, Vec2f>::Vector2;
-};
+typedef Vec4<int> Vec4i;
 
-class Vec3i : public Vector3<int, Vec3i> {
-public:
-    using Vector3<int, Vec3i>::Vector3;
-};
+typedef Vec4<float> Vec4f;
 
-class Vec3f : public Vector3<float, Vec3f> {
-public:
-    using Vector3<float, Vec3f>::Vector3;
-};
+VECTOR_LIKE_OPERATOR_ADD(Vec4i, 4);
+
+VECTOR_LIKE_OPERATOR_SUB(Vec4i, 4);
+
+VECTOR_LIKE_OPERATOR_MUL(Vec4i, 4);
+
+VECTOR_LIKE_OPERATOR_DIV(Vec4i, 4);
+
+VECTOR_LIKE_OPERATOR_ADD(Vec4f, 4);
+
+VECTOR_LIKE_OPERATOR_SUB(Vec4f, 4);
+
+VECTOR_LIKE_OPERATOR_MUL(Vec4f, 4);
+
+VECTOR_LIKE_OPERATOR_DIV(Vec4f, 4);
+
+#pragma endregion
 } // namespace SoftwareRenderer

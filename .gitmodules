@@ -1,9 +1,6 @@
 [submodule "ThirdParty/assimp"]
 	path = thirdparty/assimp
 	url = https://github.com/assimp/assimp.git
-[submodule "ThirdParty/eigen"]
-	path = thirdparty/eigen
-	url = https://gitlab.com/libeigen/eigen.git
 [submodule "ThirdParty/stb"]
 	path = thirdparty/stb
 	url = https://github.com/nothings/stb.git

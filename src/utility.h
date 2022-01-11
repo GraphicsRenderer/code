@@ -35,3 +35,8 @@ static inline bool IsFloatEqual(float a, float b)
     for (auto i = 0; i < size; i++) {            \
         ret[i] = lhs[i] op rhs[i];               \
     }
+
+#define ELEMENT_WISE_FUNC(ret, lhs, func, size) \
+    for (auto i = 0; i < size; i++) {           \
+        ret[i] = func(lhs[i]);                  \
+    }

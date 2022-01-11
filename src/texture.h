@@ -10,7 +10,7 @@ private:
 public:
     using ColorBuffer::ColorBuffer;
 
-    Texture(const char* filepath);
+    explicit Texture(const char* filepath);
 
     void SaveAsPNG(const char* filepath);
 };

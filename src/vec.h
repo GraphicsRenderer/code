@@ -54,13 +54,6 @@ namespace SoftwareRenderer {
         Type ret;                                            \
         ELEMENT_WISE_SCALAR_OP(ret, lhs, rhs, Size, /);      \
         return ret;                                          \
-    }                                                        \
-                                                             \
-    static Type operator/(const float& lhs, const Type& rhs) \
-    {                                                        \
-        Type ret;                                            \
-        ELEMENT_WISE_SCALAR_OP(ret, rhs, lhs, Size, /);      \
-        return ret;                                          \
     }
 
 #pragma region Color

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "utility.h"
-#include <cassert>
 
 namespace SoftwareRenderer {
 #define VECTOR_LIKE_OPERATOR_ADD(Type, Size)                \
@@ -112,7 +111,6 @@ struct Color {
 
     inline char& operator[](std::size_t idx)
     {
-        assert(idx >= 0 && idx < Length());
         switch (idx) {
         case 0:
             return r;
@@ -129,7 +127,6 @@ struct Color {
 
     inline const char& operator[](std::size_t idx) const
     {
-        assert(idx >= 0 && idx < Length());
         switch (idx) {
         case 0:
             return r;
@@ -185,7 +182,6 @@ struct Vec2 {
 
     inline DATATYPE& operator[](std::size_t idx)
     {
-        assert(idx >= 0 && idx < Length());
         switch (idx) {
         case 0:
             return x;
@@ -198,7 +194,6 @@ struct Vec2 {
 
     inline const DATATYPE& operator[](std::size_t idx) const
     {
-        assert(idx >= 0 && idx < Length());
         switch (idx) {
         case 0:
             return x;
@@ -264,7 +259,6 @@ struct Vec3 {
 
     inline DATATYPE& operator[](std::size_t idx)
     {
-        assert(idx >= 0 && idx < Length());
         switch (idx) {
         case 0:
             return x;
@@ -279,7 +273,6 @@ struct Vec3 {
 
     inline const DATATYPE& operator[](std::size_t idx) const
     {
-        assert(idx >= 0 && idx < Length());
         switch (idx) {
         case 0:
             return x;
@@ -365,7 +358,6 @@ struct Vec4 {
 
     inline const DATATYPE& operator[](std::size_t idx) const
     {
-        assert(idx >= 0 && idx < Length());
         switch (idx) {
         case 0:
             return x;
